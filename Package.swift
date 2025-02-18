@@ -8,8 +8,11 @@ let package = Package(
     platforms: [.macOS(.v15), .iOS(.v18), .tvOS(.v18), .watchOS(.v11), .visionOS(.v2)],
     products: [
         .library(
-            name: "FileSystem",
-            targets: ["FileSystem"]),
+            name: "FileSystemToolKit",
+            targets: ["FileSystemToolKit"]),
+        .library(
+            name: "GitHubToolKit",
+            targets: ["GitHubToolKit"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", branch: "main"),
@@ -18,23 +21,35 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FileSystem",
+            name: "FileSystemToolKit",
             dependencies: [
                 .product(name: "SystemPackage", package: "swift-system"),
-                .product(name: "ContextServer", package: "swift-context-protocol"),
+                .product(name: "ContextProtocol", package: "swift-context-protocol"),
             ]
         ),
         .executableTarget(
-            name: "FileSystemServer",
+            name: "FileSystem",
             dependencies: [
-                "FileSystem",
+                "FileSystemToolKit",
                 .product(name: "ContextServer", package: "swift-context-protocol"),
             ]
         ),
-        .testTarget(
-            name: "FileSystemTests",
+        .target(
+            name: "GitHubToolKit",
             dependencies: [
-                "FileSystem",
+                .product(name: "ContextProtocol", package: "swift-context-protocol"),
+            ]
+        ),
+        .testTarget(
+            name: "FileSystemToolKitTests",
+            dependencies: [
+                "FileSystemToolKit",
+            ]
+        ),
+        .testTarget(
+            name: "GitHubToolKitTests",
+            dependencies: [
+                "GitHubToolKit",
             ]
         ),
     ]

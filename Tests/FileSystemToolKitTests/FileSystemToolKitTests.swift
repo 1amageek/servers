@@ -1,7 +1,7 @@
 import Testing
 import Foundation
 import System
-@testable import FileSystem
+@testable import FileSystemToolKit
 
 // MARK: - Test Utilities
 extension FileManager {
